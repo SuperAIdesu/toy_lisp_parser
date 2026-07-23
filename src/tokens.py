@@ -17,13 +17,24 @@ def dummy_function(*args):
     pass
 
 
+def fn_plus(*args) -> float:
+    return sum(args)
+
+
+def fn_multiply(*args) -> float:
+    res = 1
+    for arg in args:
+        res *= arg
+    return res
+
+
 # List of acceptable function names, and map them to actual implementation
 # unimplemented functions map to the dummy function
 FN_NAME_TO_IMPL_MAP = {
     # arithmetic
-    "+": dummy_function,
+    "+": fn_plus,
     "-": dummy_function,
-    "*": dummy_function,
+    "*": fn_multiply,
     "/": dummy_function,
     "expt": dummy_function,
     "mod": dummy_function,
@@ -70,6 +81,9 @@ class FunctionToken(Token):
         Check if the name is a valid function name
         """
         return s in FN_NAME_TO_IMPL_MAP
+
+    def eval(self, *args):
+        return FN_NAME_TO_IMPL_MAP[self.name](*args)
 
     def __str__(self) -> str:
         return self.name

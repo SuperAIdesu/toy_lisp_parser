@@ -46,7 +46,23 @@ class AST:
         return AST(stack)
 
 
+def interpret(ast: AST | Token):
+    if isinstance(ast, Token):
+        assert isinstance(ast, ValueToken)
+        return ast.value
+
+    tokens = ast.tokens
+    if len(tokens) == 1 and isinstance(tokens[0], AST):
+        return interpret(tokens[0])
+    assert isinstance(tokens[0], FunctionToken)
+    fn_token = tokens[0]
+    return fn_token.eval(*[interpret(t) for t in tokens[1:]])
+
+
 if __name__ == "__main__":
-    code = "(first (list 1 (+ 2 3) 9))"
+    # code = '(first (list "hello" (+ 2.1 3) nil))'
+    code = "(* -1 (+ 1 2))"
     ast = AST.build(code)
     pprint.pp(ast)
+    result = interpret(ast)
+    print(result)
