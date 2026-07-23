@@ -1,6 +1,14 @@
-from dataclasses import dataclass
-from tokens import Token, ValueToken, FunctionToken, StartParentesisToken, EndParentesisToken
 import pprint
+from dataclasses import dataclass
+
+from tokens import (
+    EndParentesisToken,
+    FunctionToken,
+    StartParentesisToken,
+    Token,
+    ValueToken,
+)
+
 
 @dataclass
 class AST:
@@ -12,13 +20,13 @@ class AST:
         res = []
         for s_tk in str_tokens:
             if s_tk == "(":
-               res.append(StartParentesisToken())
+                res.append(StartParentesisToken())
             elif s_tk == ")":
-               res.append(EndParentesisToken())
+                res.append(EndParentesisToken())
             elif FunctionToken.is_valid(s_tk):
-               res.append(FunctionToken(name=s_tk))
+                res.append(FunctionToken(name=s_tk))
             else:
-               res.append(ValueToken.from_string(s_tk))
+                res.append(ValueToken.from_string(s_tk))
         return res
 
     @classmethod

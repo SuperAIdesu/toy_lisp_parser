@@ -1,16 +1,16 @@
-import pytest
-import sys
 import os
+import sys
+
+import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from simple_ast import AST
 from tokens import (
-    Token,
-    ValueToken,
+    EndParentesisToken,
     FunctionToken,
     StartParentesisToken,
-    EndParentesisToken,
+    ValueToken,
 )
 
 
@@ -156,7 +156,7 @@ class TestASTBuild:
         assert value_tokens[1].value is False
 
     def test_mixed_types(self):
-        ast = AST.build("(list 1 2.5 \"hello\" t nil)")
+        ast = AST.build('(list 1 2.5 "hello" t nil)')
         inner = ast.tokens[0]
         value_tokens = [t for t in inner.tokens if isinstance(t, ValueToken)]
         assert len(value_tokens) == 5

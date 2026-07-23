@@ -1,16 +1,17 @@
-import pytest
-import sys
 import os
+import sys
+
+import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from tokens import (
-    Token,
-    StartParentesisToken,
+    FN_NAME_TO_IMPL_MAP,
     EndParentesisToken,
     FunctionToken,
+    StartParentesisToken,
+    Token,
     ValueToken,
-    FN_NAME_TO_IMPL_MAP,
 )
 
 
